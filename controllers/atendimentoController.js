@@ -2,17 +2,12 @@ const AtendimentoModel = require('../models/atendimentoModel');
 const AtendimentoServicoModel = require('../models/atendimetoServicoModel');
 const ServicoModel = require('../models/servicoModel');
 const VeiculoModel = require('../models/veiculoModel');
-const veiculoModel = require('../models/veiculoModel');
+
 
 class AtendimentoController {
 
-    list(req, res) {
-
-        res.render('atendimentos/listar');
-    }
-
     async registerView(req, res) {
-        let veiculo = new veiculoModel();
+        let veiculo = new VeiculoModel();
         let crr = await veiculo.listar();
         let servicosModel = new ServicoModel();
         let servico = await servicosModel.listar()
