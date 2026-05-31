@@ -19,13 +19,17 @@ class AuthMiddleware {
     }
 
     async validaUserAdmin(req,res,next){
-        let id = req.cookies.usuarioLogado;
-        let Usuario = new usuarioModel();
-        let user = await Usuario.buscarUsuario(id);
-        if(user.perfilId == 2){
-            next();
-        }else{
-            res.redirect('/')
+        if (req.cookies && req.cookies.usuarioLogado) {
+            let id = req.cookies.usuarioLogado;
+            let Usuario = new usuarioModel();
+            let user = await Usuario.buscarUsuario(id);
+            if(user && user.perfilId == 2){
+                next();
+            } else {
+                res.redirect('/');
+            }
+        } else {
+            res.redirect('/');
         }
     }
 }
