@@ -23,7 +23,7 @@ class LoginController {
             usuario = await usuario.autenticarUsuario(req.body.inputEmail, req.body.inputPassword);
             if(usuario != null) {
                 res.cookie("usuarioLogado", usuario.usuarioId);
-                
+                res.redirect('/')
             }
             else{
                 res.render('Login/index', { msgErro: "Usuário ou senha inválidos", layout: 'Login/index' })

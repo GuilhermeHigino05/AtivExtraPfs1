@@ -7,6 +7,7 @@ const usuarioRouter = require('./routes/usuariosRoute');
 const servicoRouter = require('./routes/servicosRoute');
 const veiculoRouter = require('./routes/veiculosRoute');
 const atendimentoRouter = require('./routes/atendimentoRoute');
+const AuthMiddleware = require('./middlewares/AuthMiddleware')
 const cookieParser = require('cookie-parser');
 
 const app = express();
@@ -32,13 +33,15 @@ app.use(express.json());
 //configuração da nossa página de layout
 app.set('layout', './layout');
 app.use(expressLayouts);
-
+let auth = new AuthMiddleware
 //definindo as rotas que o nosso sistema vai reconhecer através da url do navegador
 
 app.use('/login', loginRouter);
+app.use(auth.validaUser)
 app.use('/', homeRouter)
-app.use('/usuarios', usuarioRouter);
+app.use(auth.validaUserAdmin)
 app.use('/servicos', servicoRouter);
+app.use('/usuarios', usuarioRouter);
 app.use('/veiculos', veiculoRouter);
 app.use('/atendimento', atendimentoRouter);
 //ponto de inicio do nosso servidor web
